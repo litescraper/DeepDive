@@ -98,7 +98,7 @@ async def google_search(api_key, query, top_k=5, timeout: int = 60, proxy=None, 
         session_kwargs["proxy"] = proxy
     async with aiohttp.ClientSession(**session_kwargs) as session:
         async with session.post(
-            "https://google.serper.dev/search",
+            f'{os.getenv("SERPER_BASE_URL", "https://google.serper.dev").rstrip("/")}/search',
             json={
                 "q": query,
                 "num": top_k,

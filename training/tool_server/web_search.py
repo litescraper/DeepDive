@@ -1,3 +1,4 @@
+import os
 import asyncio
 import re
 from typing import Dict, Iterable, List, Tuple
@@ -51,7 +52,7 @@ async def search(
                     if not serper_api_key:
                         raise ValueError("SERPER_API_KEY is required when SEARCH_PROVIDER=serper")
                     async with session.post(
-                        "https://google.serper.dev/search",
+                        f'{os.getenv("SERPER_BASE_URL", "https://google.serper.dev").rstrip("/")}/search',
                         json={"q": query, "num": num},
                         headers={"X-API-KEY": serper_api_key, "Content-Type": "application/json"},
                         proxy=proxy,
